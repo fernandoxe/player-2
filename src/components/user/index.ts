@@ -19,6 +19,12 @@ export class User extends LitElement {
       display: flex;
       gap: 0.5rem;
     }
+    .input {
+      padding: 0.25rem 0.5rem;
+    }
+    .input::placeholder {
+      font-style: italic;
+    }
   `;
 
   @property()
@@ -34,6 +40,7 @@ export class User extends LitElement {
         @submit=${this.handleSubmit}
       >
         <input
+          class="input"
           type="text"
           value="${this.user}"
           placeholder="Your name"
@@ -56,9 +63,11 @@ export class User extends LitElement {
     e.preventDefault();
     const target = e.target as HTMLFormElement;
     const input = target.querySelector('input') as HTMLInputElement;
+    const value = input.value.trim();
+    if(!value) return;
     this.dispatchEvent(new CustomEvent('onsetuser', {
       detail: {
-        user: input.value
+        user: value
       }
     }));
   }

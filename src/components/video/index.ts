@@ -144,11 +144,13 @@ export class Video extends LitElement {
             .reactions=${this.reactions}
           ></pl-reactions>
         </div>
-        <div class="users">
-          <pl-users
-            .users=${this.users}
-          ></pl-users>
-        </div>
+        ${this.showControls ? html`
+          <div class="users">
+            <pl-users
+              .users=${this.users}
+            ></pl-users>
+          </div>
+        ` : html``}
         ${this.outOfSync ? html`
           <div class="sync">
             <pl-synchronize

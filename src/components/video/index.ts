@@ -15,10 +15,16 @@ import { WS_HOST, WS_PATH } from '../constants';
 @customElement('pl-video')
 export class Video extends LitElement {
   static styles = css`
+    :host {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .container {
       position: relative;
       width: 100%;
       /* padding-top: 56.25%; */
+      overflow: hidden;
     }
     .video {
       width: 100%;
@@ -262,8 +268,6 @@ export class Video extends LitElement {
       this.fullscreen = false;
     } else {
       this.requestFullscreen({navigationUI: 'hide'});
-      // @ts-ignore
-      window.screen.orientation.lock('landscape').catch(e => console.error(e));
       this.fullscreen = true;
     }
   }

@@ -63,9 +63,12 @@ export class Reaction extends LitElement {
           >
             ${REACTION_TYPE[this.reaction.code]}
           </div>
-          <div class="name">
-            ${this.reaction.user}
-          </div>
+          ${this.reaction.user ?
+            html`
+              <div class="name">
+                ${this.reaction.user}
+              </div>
+            ` : ''}
         </div>
       </div>
     `;

@@ -38,7 +38,6 @@ export class Controls extends LitElement {
       height: 2rem;
       background: transparent;
       border: none;
-      color: white;
       cursor: pointer;
       padding: 0;
     }
@@ -110,9 +109,11 @@ export class Controls extends LitElement {
   render() {
     return html`
       <div class="container">
-        <div class="reactions">
-          <pl-reaction-buttons></pl-reaction-buttons>
-        </div>
+        ${this.connectionStatus === 'connected' ? html`
+          <div class="reactions">
+            <pl-reaction-buttons></pl-reaction-buttons>
+          </div>
+        ` : html``}
         <div class="controls">
           <div
             class="icon"

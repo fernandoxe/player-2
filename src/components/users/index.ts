@@ -24,11 +24,11 @@ export class Users extends LitElement {
 
   render() {
     return html`
-      ${repeat(this.users, user => user.id, user => html`
-        <div class="list">
+      <div class="list">
+        ${repeat(this.users, user => user.id, user => html`
           <div>${user.name}</div>
-        </div>
-      `)}
+        `)}
+      </div>
     `;
   }
 }

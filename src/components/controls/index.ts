@@ -63,6 +63,27 @@ export class Controls extends LitElement {
       display: flex;
       justify-content: center;
     }
+    .connecting {
+      animation: ping 1s infinite;
+    }
+    .reconnecting {
+      color: #f1c40f;
+      animation: ping 1s infinite;
+    }
+    .connected {
+      color: #2ecc71;
+    }
+    @keyframes ping {
+      0% {
+        opacity: 0.5;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0.5;
+      }
+    }
   `;
 
   @property({type: Number})
@@ -79,6 +100,9 @@ export class Controls extends LitElement {
 
   @property({ type: Array})
   subtitles!: {language: string, label: string, showing: boolean}[];
+  
+  @property({type: String})
+  private connectionStatus = '';
 
   @state()
   private showSubtitles = false;
@@ -118,7 +142,8 @@ export class Controls extends LitElement {
             </div>
           </div>
           <div
-            class="icon"
+            class="icon ${this.connectionStatus}"
+            @click="${this.handleConnect}"
           >
             <pl-group-icon></pl-group-icon>
           </div>
@@ -179,6 +204,12 @@ export class Controls extends LitElement {
 
   handleForward() {
     this.dispatchEvent(new CustomEvent('onforward'));
+  }
+
+  handleConnect() {
+    if(this.connectionStatus === 'disconnected') {
+      this.dispatchEvent(new CustomEvent('onconnect'));
+    }
   }
 
   formatTime(time: number) {

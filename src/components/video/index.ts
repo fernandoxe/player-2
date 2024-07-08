@@ -32,9 +32,7 @@ export class Video extends LitElement {
       max-height: 100vh;
     }
     video::cue {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
+      font-family: 'Open Sans', Inter, Avenir, Helvetica, Arial, sans-serif;
       background: rgba(0, 0, 0, 0);
       color: #f5f5f5;
       font-size: 3vw;

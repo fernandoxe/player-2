@@ -200,7 +200,9 @@ export class Video extends LitElement {
           </div>
         ` : html``}
         ${this.showUserModal ? html`
-          <pl-modal>
+          <pl-modal
+            @onclose="${this.handleModalClose}"
+          >
             <pl-user
               .user="${this.user}"
               @onsetuser="${this.handleSetUser}"
@@ -465,6 +467,10 @@ export class Video extends LitElement {
   handleSync() {
     const currentTime = this.outOfSync?.currentTime;
     if(currentTime) this.video.currentTime = currentTime;
+  }
+
+  handleModalClose() {
+    this.showUserModal = false;
   }
 
   connectedCallback() {

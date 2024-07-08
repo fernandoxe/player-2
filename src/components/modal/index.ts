@@ -6,13 +6,17 @@ export class Modal extends LitElement {
   static styles = css`
     :host {
       display: block;
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.5);
-      /* z-index: 100; */
+      z-index: 1;
+    }
+    .container {
+      width: 100%;
+      height: 100%;
     }
     .modal {
       position: absolute;
@@ -27,9 +31,22 @@ export class Modal extends LitElement {
 
   render () {
     return html`
-      <div class="modal">
-        <slot></slot>
+      <div
+        class="container"
+        @click=${this.handleClose}
+      >
+        <div
+          class="modal"
+          @click=${(e: Event) => e.stopPropagation()}
+        >
+          <slot></slot>
+        </div>
       </div>
     `;
   }
+
+  handleClose () {
+    this.dispatchEvent(new CustomEvent('onclose'));
+  }
+    
 }

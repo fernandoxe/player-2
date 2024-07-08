@@ -31,11 +31,20 @@ export class Video extends LitElement {
       display: block;
       max-height: 100vh;
     }
-    ::cue {
+    video::cue {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
       background: rgba(0, 0, 0, 0);
       color: #f5f5f5;
-      font-size: 2.5vw;
-      line-height: 1.25;
+      font-size: 3vw;
+      line-height: 1.2;
+      text-shadow:
+        1px 1px 3px #000,
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
     }
     .controls {
       width: 100%;
@@ -134,7 +143,6 @@ export class Video extends LitElement {
       >
         <video
           class="video"
-          muted
           @timeupdate="${this.handleTimeUpdate}"
           @loadedmetadata="${this.handleLoadedMetadata}"
           @playing="${this.handlePlaying}"
@@ -241,6 +249,7 @@ export class Video extends LitElement {
         label: track.label,
         showing: track.mode === 'showing',
       }));
+    this.subtitles.push({language: 'off', label: 'Off', showing: false});
     this.loading = false;
   }
 
@@ -275,14 +284,16 @@ export class Video extends LitElement {
   handleSubtitles(e: CustomEvent) {
     const tracks = this.video.textTracks;
     const newSubtitles = this.subtitles.map(subtitle => ({...subtitle}));
-    for (let i = 0; i < tracks.length; i++) {
-      if (i !== e.detail.index) {
+    for (let i = 0; i < this.subtitles.length; i++) {
+      if(newSubtitles[i].language !== 'off') {
         tracks[i].mode = 'hidden';
-        newSubtitles[i].showing = false;
       }
+      newSubtitles[i].showing = false;
     }
-    const track = tracks[e.detail.index];
-    track.mode = 'showing';
+    if(newSubtitles[e.detail.index].language !== 'off') {
+      const track = tracks[e.detail.index];
+      track.mode = 'showing';
+    }
     newSubtitles[e.detail.index].showing = true;
     this.subtitles = newSubtitles;
   }

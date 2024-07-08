@@ -264,6 +264,7 @@ export class Video extends LitElement {
   }
 
   handleKeyDown = (event: KeyboardEvent) => {
+    if(this.showUserModal) return;
     if (event.key === ' ') {
       this.handlePlay();
     } else if (event.key === 'Enter') {
@@ -348,7 +349,7 @@ export class Video extends LitElement {
   }
 
   handleConnect() {
-    console.log('connect');
+    // console.log('connect');
     const localUser = localStorage.getItem('user');
     if (localUser) {
       this.user = JSON.parse(localUser);

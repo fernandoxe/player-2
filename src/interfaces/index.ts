@@ -17,3 +17,11 @@ export interface ReactionI {
   size: number;
   position: number;
 }
+
+export interface UserI {
+  id: string;
+  name: string;
+  currentTime: number;
+}
+
+export type ConnectionStatus = 'disconnected' | 'connecting' | 'reconnecting' | 'connected';

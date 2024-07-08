@@ -1,6 +1,11 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { Router } from '@lit-labs/router';
+// @ts-ignore
+if (!globalThis.URLPattern) {
+  await import('urlpattern-polyfill');
+  console.log('URLPattern polyfill loaded');
+}
 import './components/video';
 
 @customElement('pl-home')

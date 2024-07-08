@@ -25,6 +25,12 @@ export class Video extends LitElement {
       display: block;
       max-height: 100vh;
     }
+    ::cue {
+      background: rgba(0, 0, 0, 0);
+      color: #f5f5f5;
+      font-size: 2.5vw;
+      line-height: 1.25;
+    }
     .controls {
       width: 100%;
       position: absolute;
@@ -43,7 +49,7 @@ export class Video extends LitElement {
       right: 0;
       max-height: 50%;
       overflow-y: scroll;
-      background: linear-gradient(0deg, rgba(0, 0, 0, 0.0), rgba(95, 62, 151, 0.7));
+      background: rgba(95, 62, 151, 0.4);
     }
     .loader {
       position: absolute;
@@ -144,7 +150,7 @@ export class Video extends LitElement {
             .reactions=${this.reactions}
           ></pl-reactions>
         </div>
-        ${this.showControls ? html`
+        ${this.users.length && this.showControls ? html`
           <div class="users">
             <pl-users
               .users=${this.users}
@@ -221,7 +227,7 @@ export class Video extends LitElement {
   }
 
   handleLoadedMetadata() {
-    this.duration = this.video.duration; this.video.currentTime = 7;
+    this.duration = this.video.duration; // this.video.currentTime = 7;
     const tracks = this.video.textTracks || [];
     this.subtitles = Array.from(tracks)
       .map(track => ({
@@ -256,6 +262,8 @@ export class Video extends LitElement {
       this.fullscreen = false;
     } else {
       this.requestFullscreen({navigationUI: 'hide'});
+      // @ts-ignore
+      window.screen.orientation.lock('landscape').catch(e => console.error(e));
       this.fullscreen = true;
     }
   }
@@ -330,6 +338,7 @@ export class Video extends LitElement {
     if (localUser) {
       this.user = JSON.parse(localUser);
     }
+    this.pause();
     this.showUserModal = true;
   }
 

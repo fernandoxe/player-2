@@ -55,7 +55,7 @@ export class Controls extends LitElement {
     }
     .subtitles {
       position: absolute;
-      bottom: 3rem;
+      bottom: 3.2rem;
       right: 0;
     }
     .reactions {

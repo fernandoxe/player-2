@@ -12,7 +12,7 @@ export class Reaction extends LitElement {
     .container {
       height: 100%;
       position: absolute;
-      top: 0;
+      top: -0.25rem;
       display: flex;
       align-items: flex-end;
       animation: bubble 2.8s linear forwards;

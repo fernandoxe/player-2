@@ -128,6 +128,9 @@ export class Video extends LitElement {
   @state()
   private outOfSync?: UserI;
 
+  @state()
+  private lastTimeSaved = 0;
+
   @property()
   id = '';
 
@@ -242,6 +245,20 @@ export class Video extends LitElement {
 
   handleTimeUpdate() {
     this.currentTime = this.video.currentTime;
+    this.saveLastTime();
+  }
+
+  saveLastTime() {
+    // save last time every 5 seconds
+    const difference = this.currentTime - this.lastTimeSaved;
+    if(difference > 5 || difference < -5) {
+      const lastTime = {
+        id: this.id,
+        currentTime: this.currentTime,
+      };
+      localStorage.setItem('lastTime', JSON.stringify(lastTime));
+      this.lastTimeSaved = this.currentTime;
+    }
   }
 
   handleLoadedMetadata() {
@@ -254,7 +271,21 @@ export class Video extends LitElement {
         showing: track.mode === 'showing',
       }));
     this.subtitles.push({language: 'off', label: 'Off', showing: false});
+    this.loadLastTime();
     this.loading = false;
+  }
+
+  loadLastTime() {
+    const lastTime = localStorage.getItem('lastTime');
+    if (lastTime) {
+      const savedLastTime = JSON.parse(lastTime);
+      if (savedLastTime.id === this.id) {
+        const currentTime = Number(savedLastTime.currentTime);
+        this.lastTimeSaved = currentTime;
+        this.currentTime = currentTime - 5; // 5 seconds before the last time
+        this.video.currentTime = currentTime - 5;
+      }
+    }
   }
 
   handleMouseMove() {

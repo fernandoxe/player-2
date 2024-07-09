@@ -11,6 +11,7 @@ import '../users';
 import '../loader';
 import '../synchronize';
 import { WS_HOST, WS_PATH } from '../constants';
+import { classMap } from 'lit/directives/class-map.js';
 
 @customElement('pl-video')
 export class Video extends LitElement {
@@ -49,6 +50,9 @@ export class Video extends LitElement {
       position: absolute;
       left: 0;
       bottom: 0;
+    }
+    .hide-cursor {
+      cursor: none;
     }
     .reactions {
       position: absolute;
@@ -136,7 +140,7 @@ export class Video extends LitElement {
   render() {
     return html`
       <div
-        class="container"
+        class="container ${classMap({'hide-cursor': !this.showControls})}"
         @mousemove="${this.handleMouseMove}"
       >
         <video

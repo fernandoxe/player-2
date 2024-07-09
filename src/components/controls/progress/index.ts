@@ -80,7 +80,7 @@ export class Progress extends LitElement {
     console.log('change', value);
   }
 
-  handleInput(e: Event) {
+  handleInput() {
     // console.log('handleInput', e.target);
     const value = this.range.value;
     this.dispatchEvent(new CustomEvent('oninput', {
